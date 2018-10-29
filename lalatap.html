@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lalatap</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/lalatap.css"></link>
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+	
+	<script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.15/howler.min.js"></script>
+	<script type="text/paperscript" canvas="myCanvas">
+		var data = {
+			q: {
+				sound: new Howl({
+					src: ['assets/sounds/bubbles.mp3']
+				}),
+				color: '#1abc9c',
+				edge: 3
+			},
+			w: {
+				sound: new Howl({
+					src: ['assets/sounds/clay.mp3']
+				}),
+				color: '#2ecc71',
+				edge: 4
+			},
+			e: {
+				sound: new Howl({
+					src: ['assets/sounds/confetti.mp3']
+				}),
+				color: '#3498db',
+				edge: 5
+			},
+			r: {
+				sound: new Howl({
+					src: ['assets/sounds/corona.mp3']
+				}),
+				color: '#9b59b6',
+				edge: 6
+			},
+				t: {
+				sound: new Howl({
+					src: ['assets/sounds/dotted-spiral.mp3']
+				}),
+				color: '#34495e',
+				edge: 7
+			},
+			y: {
+				sound: new Howl({
+					src: ['assets/sounds/flash-1.mp3']
+				}),
+				color: '#16a085',
+				edge: 8
+			},
+			u: {
+				sound: new Howl({
+					src: ['assets/sounds/flash-2.mp3']
+				}),
+				color: '#27ae60',
+				edge: 9
+			},
+			i: {
+				sound: new Howl({
+					src: ['assets/sounds/flash-3.mp3']
+				}),
+				color: '#2980b9',
+				edge: 10
+			},
+			o: {
+				sound: new Howl({
+					src: ['assets/sounds/glimmer.mp3']
+				}),
+				color: '#8e44ad',
+				edge: 11
+			},
+			p: {
+				sound: new Howl({
+					src: ['assets/sounds/moon.mp3']
+				}),
+				color: '#2c3e50',
+				edge: 12
+			},
+			a: {
+				sound: new Howl({
+					src: ['assets/sounds/pinwheel.mp3']
+				}),
+				color: '#f1c40f',
+				edge: 3
+			},
+			s: {
+				sound: new Howl({
+					src: ['assets/sounds/piston-1.mp3']
+				}),
+				color: '#e67e22',
+				edge: 4
+			},
+				d: {
+				sound: new Howl({
+					src: ['assets/sounds/piston-2.mp3']
+				}),
+				color: '#e74c3c',
+				edge: 5
+			},
+			f: {
+				sound: new Howl({
+					src: ['assets/sounds/piston-3.mp3']
+				}),
+				color: '#95a5a6',
+				edge: 6
+			},
+			g: {
+				sound: new Howl({
+					src: ['assets/sounds/prism-1.mp3']
+				}),
+				color: '#f39c12',
+				edge: 7
+			},
+			h: {
+				sound: new Howl({
+					src: ['assets/sounds/prism-2.mp3']
+				}),
+				color: '#d35400',
+				edge: 8
+			},
+			j: {
+				sound: new Howl({
+					src: ['assets/sounds/prism-3.mp3']
+				}),
+				color: '#1abc9c',
+				edge: 9
+			},
+			k: {
+				sound: new Howl({
+					src: ['assets/sounds/splits.mp3']
+				}),
+				color: '#2ecc71',
+				edge: 10
+			},
+			l: {
+				sound: new Howl({
+					src: ['assets/sounds/squiggle.mp3']
+				}),
+				color: '#3498db',
+				edge: 20
+			},
+			z: {
+				sound: new Howl({
+					src: ['assets/sounds/strike.mp3']
+				}),
+				color: '#9b59b6',
+				edge: 21
+			},
+			x: {
+				sound: new Howl({
+					src: ['assets/sounds/suspension.mp3']
+				}),
+				color: '#34495e',
+				edge: 3
+			},
+			c: {
+				sound: new Howl({
+					src: ['assets/sounds/timer.mp3']
+				}),
+				color: '#16a085',
+				edge: 4
+			},
+			v: {
+				sound: new Howl({
+					src: ['assets/sounds/ufo.mp3']
+				}),
+				color: '#27ae60',
+				edge: 5
+			},
+			b: {
+				sound: new Howl({
+					src: ['assets/sounds/veil.mp3']
+				}),
+				color: '#2980b9',
+				edge: 6
+			},
+			n: {
+				sound: new Howl({
+					src: ['assets/sounds/wipe.mp3']
+				}),
+				color: '#8e44ad',
+				edge: 7
+			},
+			m: {
+				sound: new Howl({
+					src: ['assets/sounds/zig-zag.mp3']
+				}),
+				color: '#2c3e50',
+				edge: 8
+			}
+		}
+		var shapes = []; 
+		function onKeyDown(event) {
+			var shape = new Path.RegularPolygon(getRandomPoint(), data[event.key].edge, 500);
+			shape.fillColor = data[event.key].color;
+			data[event.key].sound.play();
+			shapes.push(shape);
+		}
+		
+		function onFrame(event) {
+			for(var i =0; i < shapes.length; i++){
+				shapes[i].fillColor.hue += 1;
+				shapes[i].scale(.92);
+				if(shapes[i].area < 1){
+					shapes[i].remove(); 
+					shapes.splice(i, 1);
+				}
+			}
+		}
+		
+		function getRandomPoint(){
+			return new Point(getRandomCoord(view.size.width), getRandomCoord(view.size.height));
+		}
+		function getRandomCoord(wide){
+			return Math.floor(Math.random()*wide);		
+		}
+	</script>
+</body>
+</html>
